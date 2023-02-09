@@ -26,6 +26,12 @@
       },
       "api": {
         "chatpoc": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d18ia7sb1jnivb",
+          "type": "cicd"
+        }
       }
     }
   }

@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "contexts/AuthProvider";
 import WBLogo from "assets/wb-logo.svg";
 
-const navigationLinks = [{ path: "/", label: "Dashboard" }];
+const navigationLinks = [{ path: "/", label: "Chat Room" }];
 
 const NavBar: FC = () => {
   const { user, signOut } = useAuth();
