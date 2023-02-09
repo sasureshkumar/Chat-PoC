@@ -1,0 +1,116 @@
+{
+  "api": {
+    "chatpoc": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "chatpoc9b5c8c079b5c8c07"
+        }
+      ],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authchatpoc9b5c8c079b5c8c07"
+            }
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
+  "auth": {
+    "chatpoc9b5c8c079b5c8c07": {
+      "customAuth": false,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "chatpoc9b5c8c079b5c8c07PostConfirmation",
+          "triggerProvider": "Cognito"
+        }
+      ],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL",
+          "NAME"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    },
+    "userPoolGroups": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "chatpoc9b5c8c079b5c8c07"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups"
+    }
+  },
+  "function": {
+    "chatpoc9b5c8c079b5c8c07PostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_chatpoc9b5c8c079b5c8c07PostConfirmation_GROUP": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "chatpoc9b5c8c079b5c8c07PostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_chatpoc9b5c8c079b5c8c07PostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "chatpoc9b5c8c079b5c8c07PostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_chatpoc9b5c8c079b5c8c07PostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "chatpoc9b5c8c079b5c8c07PostConfirmation"
+        }
+      ]
+    }
+  }
+}

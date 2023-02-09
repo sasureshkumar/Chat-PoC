@@ -1,0 +1,61 @@
+{
+  "version": "1",
+  "cognitoConfig": {
+    "identityPoolName": "chatpoc9b5c8c07_identitypool_9b5c8c07",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "chatpo9b5c8c07",
+    "userPoolName": "chatpoc9b5c8c07_userpool_9b5c8c07",
+    "autoVerifiedAttributes": [
+      "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+      "SMS Text Message"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+      "email",
+      "name"
+    ],
+    "aliasAttributes": [],
+    "userpoolClientGenerateSecret": false,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+      "email"
+    ],
+    "userpoolClientReadAttributes": [
+      "email"
+    ],
+    "userpoolClientLambdaRole": "chatpo9b5c8c07_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": false,
+    "sharedId": "9b5c8c07",
+    "resourceName": "chatpoc9b5c8c079b5c8c07",
+    "authSelections": "identityPoolAndUserPool",
+    "useDefault": "manual",
+    "thirdPartyAuth": false,
+    "usernameAttributes": [
+      "email"
+    ],
+    "userPoolGroups": true,
+    "adminQueries": false,
+    "triggers": {
+      "PostConfirmation": [
+        "add-to-group"
+      ]
+    },
+    "hostedUI": false,
+    "userPoolGroupList": [
+      "Admin",
+      "User"
+    ],
+    "serviceName": "Cognito",
+    "usernameCaseSensitive": false,
+    "useEnabledMfas": true
+  }
+}

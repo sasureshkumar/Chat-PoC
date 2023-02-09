@@ -1,0 +1,32 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-chatpoc-dev-05413-authRole",
+      "UnauthRoleArn": "arn:aws:iam::272653032249:role/amplify-chatpoc-dev-05413-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::272653032249:role/amplify-chatpoc-dev-05413-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-chatpoc-dev-05413-deployment",
+      "UnauthRoleName": "amplify-chatpoc-dev-05413-unauthRole",
+      "StackName": "amplify-chatpoc-dev-05413",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:272653032249:stack/amplify-chatpoc-dev-05413/56eae050-a8af-11ed-8456-02cf7f5342c0",
+      "AmplifyAppId": "d18ia7sb1jnivb",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-chatpoc-dev-05413-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "chatpoc9b5c8c079b5c8c07": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "chatpoc9b5c8c079b5c8c07PostConfirmation": {
+          "GROUP": "User",
+          "deploymentBucketName": "amplify-chatpoc-dev-05413-deployment",
+          "s3Key": "amplify-builds/chatpoc9b5c8c079b5c8c07PostConfirmation-4f664779577044703730-build.zip"
+        }
+      },
+      "api": {
+        "chatpoc": {}
+      }
+    }
+  }
+}

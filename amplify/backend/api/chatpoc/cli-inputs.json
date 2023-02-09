@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "chatpoc",
+    "serviceName": "AppSync",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authchatpoc9b5c8c079b5c8c07"
+    }
+  }
+}

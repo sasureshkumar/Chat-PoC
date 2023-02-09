@@ -1,0 +1,46 @@
+type Room @model(timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" })
+@auth(
+    rules: [
+        { allow: owner }
+        { allow: groups, groups: ["User"], operations: [read] }
+        { allow: groups, groups: ["Admin"], operations: [read, delete] }
+    ]
+)
+{
+    id: ID! @primaryKey(sortKeyFields: ["createdOn"])
+    name: String!
+    messages: [Message] @hasMany(indexName: "byRoom", fields: ["id"])
+    owner: String @auth(rules: [
+        { allow: owner, operations: [read] }
+        { allow: groups, groups: ["User"], operations: [read] }
+        { allow: groups, groups: ["Admin"], operations: [read] }
+    ])
+    createdOn: AWSDateTime!
+    updatedOn: AWSDateTime!
+}
+
+type Message @model(timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" })
+@auth(
+    rules: [
+        { allow: owner }
+        { allow: groups, groups: ["User"], operations: [read] }
+        { allow: groups, groups: ["Admin"], operations: [read, delete] }
+    ]
+)  {
+    id: ID! @primaryKey(sortKeyFields: ["createdOn"])
+    content: String!
+    owner_name: String
+    roomId: ID! @index(name: "byRoom", sortKeyFields: ["createdOn"])
+    owner: String @auth(rules: [
+        { allow: owner, operations: [read] }
+        { allow: groups, groups: ["User"], operations: [read] }
+        { allow: groups, groups: ["Admin"], operations: [read] }
+    ])
+    createdOn: AWSDateTime!
+    updatedOn: AWSDateTime!
+}
+
+type Subscription {
+    onCreateMessageByRoomId(roomId: ID): Message
+    @aws_subscribe(mutations: ["createMessage"])
+}

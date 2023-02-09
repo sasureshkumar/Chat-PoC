@@ -1,0 +1,18 @@
+{
+  "trigger": true,
+  "modules": [
+    "add-to-group"
+  ],
+  "parentResource": "chatpoc9b5c8c079b5c8c07",
+  "functionName": "chatpoc9b5c8c079b5c8c07PostConfirmation",
+  "resourceName": "chatpoc9b5c8c079b5c8c07PostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": [],
+  "triggerDir": "/snapshot/repo/build/node_modules/@aws-amplify/amplify-category-auth/provider-utils/awscloudformation/triggers/PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "triggerEventPath": "PostConfirmation.event.json",
+  "roleName": "chatpoc9b5c8c079b5c8c07PostConfirmation",
+  "skipEdit": true,
+  "GROUP": "User",
+  "enableCors": false
+}
