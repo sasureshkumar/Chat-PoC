@@ -9,7 +9,7 @@ import WBLogo from "assets/wb-logo.svg";
 const NavBar: FC = () => {
   const { user, signOut } = useAuth();
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+    <Disclosure as="nav" className="z-50 bg-white shadow">
       {({ open }) => (
         <>
           <div className="mx-auto px-2 sm:px-6 lg:px-8">
@@ -66,7 +66,7 @@ const NavBar: FC = () => {
                             }}
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "block cursor-pointer px-4 py-2 text-sm text-gray-700"
                             )}
                           >
                             Sign out

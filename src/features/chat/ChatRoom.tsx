@@ -11,6 +11,10 @@ import { onCreateMessageByRoomId } from "graphql/subscriptions";
 import { useAuth } from "contexts/AuthProvider";
 import classNames from "classnames";
 import SendMessage from "features/chat/SendMessage";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 type Props = {
   room: Room;
@@ -111,6 +115,16 @@ const ChatRoom: FC<Props> = ({ room }) => {
                     </div>
                   )}
                   <div>{message.content}</div>
+                  <div
+                    className={classNames(
+                      message.owner === user?.attributes?.sub
+                        ? "text-sky-400"
+                        : "",
+                      "pt-1 text-gray-400"
+                    )}
+                  >
+                    {dayjs(message.createdOn).fromNow()}
+                  </div>
                 </div>
               </div>
             </div>
