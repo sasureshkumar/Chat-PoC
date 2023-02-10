@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import {
   Message,
   MessagesByRoomIdAndCreatedOnQuery,
@@ -6,39 +6,35 @@ import {
   Room,
 } from "API";
 import { API } from "aws-amplify";
-import { createMessage } from "graphql/mutations";
 import { messagesByRoomIdAndCreatedOn } from "graphql/queries";
 import { onCreateMessageByRoomId } from "graphql/subscriptions";
 import { useAuth } from "contexts/AuthProvider";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
+import SendMessage from "features/chat/SendMessage";
 
-export type Props = {
+type Props = {
   room: Room;
 };
+
+export const sortMessages = (messages: Message[]) => {
+  return messages.sort((a, b) => {
+    if (a.createdOn < b.createdOn) {
+      return -1;
+    }
+    if (a.createdOn > b.createdOn) {
+      return 1;
+    }
+    return 0;
+  });
+};
+
 const ChatRoom: FC<Props> = ({ room }) => {
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
   const [messages, setMessages] = useState<Message[]>([]);
   const { user } = useAuth();
-  const [messageContent, setMessageContent] = useState("");
-  const sendMessage = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    if (messageContent) {
-      const { data: newMessage } = (await API.graphql({
-        query: createMessage,
-        variables: {
-          input: {
-            content: messageContent,
-            roomId: room.id,
-            owner_name: user?.attributes?.name,
-          },
-        },
-      })) as { data: { createMessage: Message } };
-      console.log("new message", newMessage);
-      setMessages([...messages, newMessage.createMessage]);
-      setMessageContent("");
-    }
-  };
-
   useEffect(() => {
     (
       API.graphql({
@@ -51,7 +47,9 @@ const ChatRoom: FC<Props> = ({ room }) => {
     ).then(({ data }) => {
       const messages = data?.messagesByRoomIdAndCreatedOn?.items as Message[];
       if (messages.length > 0) {
-        setMessages(messages);
+        setMessages(sortMessages(messages));
+      } else {
+        setMessages([]);
       }
     });
   }, [room.id]);
@@ -69,9 +67,10 @@ const ChatRoom: FC<Props> = ({ room }) => {
           value: { data: OnCreateMessageByRoomIdSubscription };
         }) => {
           const newMessage = value.data.onCreateMessageByRoomId;
-          if (newMessage && newMessage.owner !== user?.attributes?.sub) {
-            console.log("new message", newMessage);
-            setMessages([...messages, newMessage]);
+          if (newMessage) {
+            setMessages((currentMessages) => {
+              return sortMessages([...currentMessages, newMessage]);
+            });
           }
         },
       });
@@ -81,11 +80,14 @@ const ChatRoom: FC<Props> = ({ room }) => {
     }
   }, [room.id, user?.attributes?.sub]);
 
-  return (
-    <div className="h-screen flex-col px-6 pt-6 pb-4">
-      <h1 className="text-sky-600">{room.name}</h1>
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
-      <div className="mt-4 flex min-h-fit flex-col space-y-4 overflow-y-auto border-t p-3">
+  return (
+    <div className="flex h-[calc(100vh-5rem)] flex-col">
+      <h1 className="p-4 text-sky-600">{room.name}</h1>
+      <div className="flex h-full flex-col space-y-4 overflow-y-scroll border-t p-4">
         {messages.map((message) => (
           <div key={message.id}>
             <div
@@ -114,32 +116,9 @@ const ChatRoom: FC<Props> = ({ room }) => {
             </div>
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
-
-      <div>
-        <form className="mt-6 flex space-x-4" onSubmit={sendMessage}>
-          <div className="min-w-0 flex-1">
-            <div className="relative rounded-md shadow-sm">
-              <input
-                type="text"
-                value={messageContent}
-                onChange={(e) => setMessageContent(e.target.value)}
-                className="block w-full rounded-md border-gray-300 focus:border-sky-500 focus:ring-sky-500 sm:text-sm"
-                placeholder="Write a message..."
-              />
-            </div>
-          </div>
-          <button
-            type="submit"
-            className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-          >
-            <PaperAirplaneIcon
-              className="h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />
-          </button>
-        </form>
-      </div>
+      <SendMessage room={room} />
     </div>
   );
 };

@@ -46,7 +46,7 @@ const Dashboard: FC = () => {
   return (
     <div className="flex overflow-auto">
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <div className="relative z-0 flex flex-1 overflow-hidden">
+        <div className="relative z-0 flex flex-1 overflow-hidden border-b">
           <aside className="w-96 flex-shrink-0 border-r border-gray-200">
             <div className="px-6 pt-6 pb-4">
               <h2 className="text-lg font-medium text-gray-900">Rooms</h2>

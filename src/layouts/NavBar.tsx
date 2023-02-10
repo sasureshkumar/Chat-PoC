@@ -6,8 +6,6 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "contexts/AuthProvider";
 import WBLogo from "assets/wb-logo.svg";
 
-const navigationLinks = [{ path: "/", label: "Chat Room" }];
-
 const NavBar: FC = () => {
   const { user, signOut } = useAuth();
   return (
@@ -34,25 +32,6 @@ const NavBar: FC = () => {
                     src={WBLogo}
                     alt="WittyBanter"
                   />
-                </div>
-                <div className="sm:ml-6 sm:flex sm:space-x-8">
-                  {navigationLinks.map((item) => (
-                    <NavLink
-                      key={item.path}
-                      to={item.path}
-                      end
-                      className={({ isActive }) =>
-                        classNames(
-                          isActive
-                            ? "border-sky-500 text-gray-900"
-                            : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
-                          "inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium"
-                        )
-                      }
-                    >
-                      {item.label}
-                    </NavLink>
-                  ))}
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
